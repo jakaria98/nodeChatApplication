@@ -8,15 +8,14 @@ const cookieParser = require('cookie-parser');
 // internal imports
 const { notFoundHandler, errorHandler } = require('./middlewares/common/errorHandler');
 const loginRouter = require('./router/loginRouter');
+const usersRouter = require('./router/usersRouter');
+const inboxRouter = require('./router/inboxRouter');
 // app initialization
 app = express();
 dotenv.config();
 // database connection
 mongoose
-    .connect(process.env.MONGO_CONNECTION_STRING, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+    .connect(process.env.MONGO_CONNECTION_STRING)
     .then(() => console.log('database connection successful!'))
     .catch((err) => console.log(err));
 
@@ -26,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // set view engine
 app.set('view engine', 'ejs');
+ app.set('views', path.join(__dirname, 'views'));
 
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));

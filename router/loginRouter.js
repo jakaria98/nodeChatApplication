@@ -1,6 +1,8 @@
 const router = require('express').Router();
 
-const loginController = require('../controller/loginController');
+const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
 
-router.get('/', loginController);
+const { getLogin } = require('../controller/loginController');
+
+router.get('/', decorateHtmlResponse('Login'), getLogin);
 module.exports = router;
