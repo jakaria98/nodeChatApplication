@@ -1,3 +1,4 @@
+const uploader = require('../../utilities/singleUploader');
 const avatarUpload = async (req, res, next) => {
     const upload = uploader(
         'avatars',
