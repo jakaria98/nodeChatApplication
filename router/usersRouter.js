@@ -8,9 +8,10 @@ const {
     addUserValidators,
     addUserValidationHandler,
 } = require('../middlewares/users/userValidators');
+const { checkLogin, redirectLoggedIn } = require('../middlewares/common/checkLogin');
 
 // get user
-router.get('/', decorateHtmlResponse('User'), getUser);
+router.get('/', decorateHtmlResponse('User'), checkLogin, getUser);
 
 // add user
 router.post('/', avatarUpload, addUserValidators, addUserValidationHandler, addUser);
