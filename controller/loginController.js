@@ -30,12 +30,12 @@ const login = async (req, res, next) => {
                 };
                 // generate token
                 const token = jwt.sign(userObject, process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRY,
+                    expiresIn: '1d',
                 });
                 // set cookie
                 res.cookie(process.env.COOKIE_NAME, token, {
                     httpOnly: true,
-                    maxAge: process.env.JWT_EXPIRY,
+                    maxAge: 24 * 60 * 60 * 1000,
                     signed: true,
                 });
                 // set locals
@@ -60,4 +60,10 @@ const login = async (req, res, next) => {
         });
     }
 };
-module.exports = { getLogin, login };
+
+//logout
+const logout = (req, res, next) => {
+    res.clearCookie(process.env.COOKIE_NAME);
+    res.send('Logout');
+};
+module.exports = { getLogin, login , logout};
