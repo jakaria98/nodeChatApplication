@@ -8,14 +8,28 @@ const {
     addUserValidators,
     addUserValidationHandler,
 } = require('../middlewares/users/userValidators');
-const { checkLogin, redirectLoggedIn } = require('../middlewares/common/checkLogin');
+const { checkLogin, redirectLoggedIn , requireRole} = require('../middlewares/common/checkLogin');
 
-// get user
-router.get('/', decorateHtmlResponse('User'), checkLogin, getUser);
+// users page
+router.get(
+  "/",
+  decorateHtmlResponse("Users"),
+  checkLogin,
+  requireRole(["admin"]),
+  getUser
+);
 
 // add user
-router.post('/', avatarUpload, addUserValidators, addUserValidationHandler, addUser);
+router.post(
+  "/",
+  checkLogin,
+  requireRole(["admin"]),
+  avatarUpload,
+  addUserValidators,
+  addUserValidationHandler,
+  addUser
+);
 
 // remove user
-router.delete("/:id", removeUser);
+router.delete("/:id", checkLogin, requireRole(["admin"]), removeUser);
 module.exports = router;

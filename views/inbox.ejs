@@ -4,7 +4,7 @@
         <input type="text" placeholder="Search" />
       </div>
       <div id="conversation-list">
-        <% data.forEach(function(conversation) { %>
+        <% if(data && data.length> 0) { data.forEach(function(conversation) { %>
           <!-- conversation creator is same to logged in user, so we need to show participant name and avatar -->
           <% if(conversation.creator.id == loggedInUser.userid) { %>
             <div class="conversation" onclick="getMessages('<%= conversation._id %>', '<%= conversation.participant.name %>')">
@@ -27,7 +27,7 @@
               <div class="conversation-date"><%= moment(conversation.last_updated).fromNow() %></div>
             </div>
           <% } %>
-        <% }); %>
+        <% });} %>
         
         <!-- show no conversation placeholder image for 0 conversations -->
         <% if(data && data.length === 0) { %>
